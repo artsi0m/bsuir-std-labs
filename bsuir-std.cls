@@ -42,6 +42,8 @@
 \RequirePackage{amsmath}
 \RequirePackage{unicode-math}
 
+\RequirePackage{url}
+
 %%%%%%%
 % СТП %
 %%%%%%%

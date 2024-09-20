@@ -78,6 +78,13 @@
   leftmargin = *,
 }
 
+\setlist[itemize, 1]{ % Первый уровень в нумерованных перечислениях
+  label = \textendash,
+  nosep,   % У списков по СТП такой межстрочный интервал
+  labelindent = \parindent,
+  leftmargin = *,
+}
+
 % Считать рисунки и таблицы в пределах глав.
 \counterwithin{figure}{section}
 \counterwithin{table}{section}

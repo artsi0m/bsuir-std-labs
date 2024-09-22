@@ -93,8 +93,9 @@
 
 % Отсуствие точек у номеров оглавлений секций
 % https://tex.stackexchange.com/a/324041
+% https://mirror.datacenter.by/pub/mirrors/CTAN/macros/latex/contrib/titlesec/titlesec.pdf
 \titleformat{\section}
-{\normalfont\Large\bfseries}{\thesection}{0.4em}{}
+{\normalfont\Large\bfseries}{\thesection}{0.4em}{\MakeUppercase}
 
 \titleformat{\subsection}
 {\normalfont\large\bfseries}{\thesubsection}{0.4em}{}

@@ -91,11 +91,18 @@
 \counterwithin{figure}{section}
 \counterwithin{table}{section}
 
-% Отсуствие точек у номеров оглавлений секций
+% Оглавление секций:
+% Отсуствие точек у номеров
+% Верхний регистр
+%
 % https://tex.stackexchange.com/a/324041
 % https://mirror.datacenter.by/pub/mirrors/CTAN/macros/latex/contrib/titlesec/titlesec.pdf
-\titleformat{\section}
+\titleformat{\section}[block]
 {\normalfont\Large\bfseries}{\thesection}{0.4em}{\MakeUppercase}
+
+\titleformat{name=\section,numberless}[block]
+{\normalfont\Large\bfseries}{}{0.4em \centering}{\MakeUppercase}
+
 
 \titleformat{\subsection}
 {\normalfont\large\bfseries}{\thesubsection}{0.4em}{}

@@ -44,6 +44,10 @@
 
 \RequirePackage{url}
 
+\RequirePackage{tocbasic}
+
+\RequirePackage{setspace}
+
 %%%%%%%
 % СТП %
 %%%%%%%
@@ -53,9 +57,19 @@
 % В СТП-2024 интервал уже оговорен и равен единице
 % «межстрочный интервал – 1,0 (18 пунктов),»
 % 40 +- 3 строки на страницу
-\linespread{1}
-\RequirePackage{setspace}
+\singlespacing
+
 \setstretch{1}
+
+% Содержание по СТП
+% Look at comadocs for setting up toc
+% https://mirror.datacenter.by/pub/mirrors/CTAN/macros/latex/contrib/koma-script/doc/scrguide-en.pdf
+\DeclareTOCStyleEntries[
+  beforeskip=0pt, % интервал
+  linefill=\dotfill,
+]{tocline}{section,subsection,subsubsection}
+
+
 
 % Приложение Л. СТП-2024
 \geometry{left=30mm, top=20mm, right=15mm, bottom=20mm}
@@ -109,6 +123,7 @@
 
 \titleformat{\subsubsection}
 {\normalfont\normalsize\bfseries}{\thesubsubsection}{0.4em}{}
+
 
 
 

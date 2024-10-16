@@ -18,18 +18,33 @@
 
 \usepackage[sorting=none,backend=biber]{biblatex}
 % библиогорафия в last
-\usepackage{url}
 
-\usepackage{float}
-\usepackage{lipsum}
+% Ссылки в пдфке
+\usepackage{hyperref}
+
+\usepackage{blindtext}
+\usepackage{mwe}
+
+
+
+\title{Заголовок}
+\author{Артём Корякин}
+\date{2024-09-24 }
+
 
 \begin{document}
 % Путь к месту где картинки лежат
 \graphicspath{ {..} }
 % https://tex.stackexchange.com/a/139403
+\begin{titlepage}
+  
+  \maketitle
+\end{titlepage}
+\newpage
 
 % Содержание
 \tableofcontents
+
 % Капсом. По центру. Межстрочный интервал такой же как в остальном
 % документе
 \newpage
@@ -40,6 +55,8 @@
 % капсом и по центру
 % Остальные секции просто капсом.
 \addcontentsline{toc}{section}{Введение}
+
+\blindtext[3]
 
 Настоящий отчет подготовлен по итогам производственной практики,
 проходившей на базе
@@ -69,10 +86,12 @@
   \end{itemize}
 \end{enumerate}
 
-Обезьяны съели старосту.
+\blindtext[3]
 
 \newpage
 \section{Описание предприятия}
+
+\blindtext[3]
 
 Название экологической организации — это
 краткое описание организации её сфера
@@ -97,21 +116,19 @@
 
 
 \begin{center} % Сделать по левому краю
-где A — первое число;\\
+где: A — первое число;\\
 B — второе число;\\
 C — общий знаменатель.\\
 
 \end{center}
 
-Обезьяны старосту продали на рынке на кирпичный завод.
-
-\newpage
-\section{Gorillaz}
-
-\lipsum
+\blindtext[2]
 
 \newpage
 \section*{Заключение}
+\addcontentsline{toc}{section}{Заключение}
+
+\blindtext[3]
 
 Производственная практика на [Название организации] оказала
 положительное влияние на мои знания о состоянии окружающей среды и
@@ -119,29 +136,37 @@ C — общий знаменатель.\\
 будущей карьере в области экологии охраны окружающей среды.
 
 
+\newpage
+\section*{приложение А график}
+\addcontentsline{toc}{section}{Приложение А}
 
-\section*{ПРИЛОЖЕНИЕ А \\
-  График}
-\addcontentsline{toc}{section}{Приложения}
 
 
-[График биоразнообразия]
+\begin{figure}[H]
+  \centering
+\includegraphics{example-grid-100x100pt}  
+  \caption*{Рис. А: График биоразонообразия}
+\end{figure}
+
+\blindtext[3]
+
 \newpage
 
-\section*{ПРИЛОЖЕНИЕ Б \\
-  Таблица} 
-\addcontentsline{toc}{section}{Приложения}
+\section*{ПРИЛОЖЕние Б \newline Таблица} 
+\addcontentsline{toc}{section}{Приложение Б}
 
+\blindtext[3]
+ 
 % Таблица должна нумероваться 
 \begin{table}[H]
   \centering
   \begin{tabular}[c]{| l | c | r |}
     \hline
-     Показатель & Значение 1 & Значние 2 \\ \hline
+     Показатель & Значение 1 & Значение 2 \\ \hline
      Показатель A & X1 & Y1 \\ \hline
      Показатель B & X2 & Y2 \\ \hline
   \end{tabular}
-  \caption{Таблица с результатами исследований.}
+  \caption*{Табл. Б: Таблица с результатами исследований.}
 \end{table}
 
 

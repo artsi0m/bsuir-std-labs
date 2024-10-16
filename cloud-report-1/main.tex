@@ -1,0 +1,115 @@
+\documentclass[a4paper]{../bsuir-std}
+\usepackage{listings}
+%\usepackage{courier}
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+
+\usepackage[sorting=none,backend=biber]{biblatex}
+\addbibresource{lab1.bib}
+
+
+\begin{document}
+
+\include{title}
+
+\graphicspath{ {img/docker-shots/} {img/portainer-shots/}}
+
+\section{Пошаговое описание выполняемых действий}
+
+Первым делом было создано персистентное хранилище.
+В данном случае слово персистентный означает постоянство
+данных в контейнере между запусками разных контейров в docker.
+
+Затем была запущена комманда docker run взятая из документации
+portainer community edition ~\cite{portainer}.
+
+%\setmonofont{Iosevka}
+\setmonofont{Courier New}
+\begin{verbatim}
+docker run -d \
+  -p 8000:8000 -p 9443:9443 \
+  --name portainer --restart=always \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v portainer_data:/data portainer/portainer-ce:2.21.1
+\end{verbatim}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.2]{Screenshot-2024-09-17-20-54-58.png}
+  \caption{Скриншот вышеприведенных комманд запущенных в терминале}
+\end{figure}
+
+Разберу пошагово запущенную команду.
+Глагол run в аргументе командной строки у docker,
+соответсвенно странице мануала означает
+«создать и запустить контейнер из образа (image)».
+
+Опция \texttt{-p} или её более длинный вариант \texttt{--publish}
+означает сделать доступными на соотвествующих портах TCP/ip
+хоста порты контейнера.
+
+Опция \texttt{--name} позволяет указать имя для контейнера.
+
+Опция \texttt{--restart=always} говорит docker
+всегда перезапускать контейнер при выходе из строя.
+
+Опция \texttt{-v} или \texttt{--volume} позволяет указать
+персистнное хранилище, которое в дальшнейшем будет использовать контейнер.
+
+Описание всех этих опция приведено в странице манула  \texttt{docker run}
+~\cite{docker-run-manpage}.
+После описанного шага бала осущствелена регистрация и
+аутентификация в веб интерфейсе portainer.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.1]{Screenshot-2024-09-17-20-57-09.png}
+  \caption{Страница входа в веб-интерфейс portainer в браузере}
+\end{figure}
+
+После этого я подключился к окружению local в portainer.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.15]{Screenshot- 2024-09-17-22-06-17.png}
+  \caption{Результат запуска команды pull в portainer}
+\end{figure}
+
+Был скачан и запущен образ контейнера \texttt{cookiecutter},
+скрипта для быстрого создания проектов с исходным кодом по шаблону.
+
+\newpage
+
+\section{Описание самого непонятного или сложного шага}
+
+Самый непонятный для меня шаг был не в самостоятельной,
+а в аудиторной части лабораторной работы, когда не удалось наладить
+взаимодествие podman, скрипта обёртки podman-docker,
+который позволяет работать с podman как docker и docker hub.
+
+Почему-то не получалось сделать push на docker hub из podman.
+
+Данную проблема решена не была,
+вместо этого был удалён podman и настроен docker в соответсвии с
+инструкцией используемого мною дистрибутива~\cite{suse-wiki-docker}.
+
+\section{вывод}
+
+В процессе выполнения лабораторной работы был развернут и запущен
+образ Portainer.io Community Edition в режиме Docker Standalone.
+
+В рамках работы был установлен контейнер с программным обеспечением
+через интерфейс Portainer.io, а затем он был успешно удалён.
+
+Также были проанализированы возможности управления контейнерами и
+мониторинга их состояния, что позволило глубже понять функционал
+Portainer.io и его применение в реальных сценариях.
+
+\renewcommand{\refname}{\textbf{Cписок использованных источников}}
+\DeclareFieldFormat{url}{Режим доступа\addcolon\space\url{#1} [Электронный ресурс].}
+\DeclareFieldFormat{title}{{#1}}
+\DeclareFieldFormat{labelnumberwidth}{[{#1}]\adddot  }
+
+\addcontentsline{toc}{section}{Список использованных источников}
+\printbibliography
+
+\end{document}

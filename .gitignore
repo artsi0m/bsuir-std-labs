@@ -1,9 +1,15 @@
 # -*- mode: gitignore; -*-
 
+# My own release files
+main.pdf
+build/
+
+
 ## Emacs
 *~
 .\#*
 \#*\#
+auto/
 
 ## Core latex/pdflatex auxiliary files:
 *.aux

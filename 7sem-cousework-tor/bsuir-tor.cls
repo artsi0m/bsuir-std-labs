@@ -120,10 +120,10 @@
 
 
 \titleformat{\subsection}
-{\normalfont\large\bfseries}{\thesubsection}{0.4em}{}
+{\normalfont}{\thesubsection}{0.4em}{}
 
 \titleformat{\subsubsection}
-{\normalfont\normalsize\bfseries}{\thesubsubsection}{0.4em}{}
+{\normalfont}{\thesubsubsection}{0.4em}{}
 
 
 

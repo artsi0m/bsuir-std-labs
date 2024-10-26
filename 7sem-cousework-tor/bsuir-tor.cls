@@ -118,11 +118,11 @@
 \titleformat{name=\section,numberless}[block]
 {\normalfont\Large}{}{0.4em \centering}{\MakeUppercase}
 
-\titleformat{\subsection}
-{\normalfont}{\thesubsection}{0.4em}{}
+\titleformat{\subsection}[runin]
+{\normalfont}{\thesubsection}{0.4em}{}[ \  ] % Пробел после заголовка
 
 \titleformat{\subsubsection}[runin] % начало текста на той же строке
-{\normalfont}{\thesubsubsection}{0.4em}{}[ \ ] % Пробел после заголовка
+{\normalfont}{\thesubsubsection}{0.4em}{}[ \  ] % Пробел после заголовка
 
 % абзац
 \titlespacing*{\subsection}{12.5mm}{*0}{*0}

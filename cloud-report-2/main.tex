@@ -1,0 +1,173 @@
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:
+\documentclass{../bsuir-std}
+
+\begin{document}
+
+\graphicspath{ {img/} }
+\input{title}
+
+\section{Пошаговое описание выполняемых действий}
+
+\subsection*{Написание yaml файла для docker compose}
+
+Был написан yaml файл следующего содержания:
+\begin{verbatim}
+version: "3"
+
+services:
+  karakin:
+    image: "postgres:17-alpine"
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DATABASE=admin
+    volumes:
+      - friday:/var/lib/postgresql/data
+      - .:/csv
+      
+  artsi0m:
+    image: "dpage/pgadmin4"
+    ports:
+      - 15432:15432
+      - 80:5050
+    environment:
+      ALLOW_SPECIAL_EMAIL_DOMAINS: "true"
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: artsi0m         
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - karakin
+
+
+volumes:
+  friday:
+  pgadmin_data:
+\end{verbatim}
+
+Разберём последовательно данный файл конфигурации:
+\begin{enumerate}
+\item В самом начале указана версия файла конфигурации
+\verb|version: "3"|,
+с которой будет работать docker compose.
+Строка необходима в любом файле docker-compose.
+Без неё воссоздать конфигурацию из файла будет невозможно;
+
+\item После строки \texttt{services:} указаны два сервиса, которые
+будут запущены \texttt{karakin} для контейнера содержащего СУБД и
+\texttt{artsi0m} для контейнера содержащего веб-интерфейс для
+управления СУБД;
+  
+\item Строкой \texttt{image:} указывается контейнер из Docker Hub, на
+базе которого будет построен конкретный сервис;
+
+\item \texttt{environment:} позволяет указать переменные окружения
+  устанавливаемые для процессов внутри контейнера;
+
+  
+\item \texttt{volumes:} перечисляет персистентные, то есть существующие
+  после перезапуска контейнера, хранилища подключаемые к контейнеру.
+  Однако их предварительно нужно создавать командой \texttt{docker volume create}.
+  Перечисление записывается через двоеточие, перед двоеточием каталог
+  на хосте или подключаемое персистентное хранилище, а после двоеточия
+  каталог в контейнере;
+
+\item \verb|depends_on:| указывает зависимость одного сервиса от
+  другого для последовательного запуска;
+
+\item \texttt{ports:} позволяет указать какой порт будет соотвествовать
+какому порту при трансляции портов осуществляемой docker для
+соединений между хостом и контейнерами;
+
+\item \texttt{restart: always} указывает всегда перезапускать
+контейнер, если происходит какая-то ошибка не дающая контейнер
+развернуть.
+
+\end{enumerate}
+
+\subsection*{Заполнение базы данных через веб-интерфейс pgadmin}
+
+Для того, чтобы подключиться к \textit{pgadmin} были введены логин и
+пароль перечисленные в переменных окружения в описании сервиса
+\texttt{artsi0m}.
+
+После этого было осуществлено подключение к СУБД из самого интерфейса
+\textit{pgadmin}. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.2]{pgadmin-connect-window.png}
+  \caption{Окно подключение к СУБД в pgadmin}
+\end{figure}
+
+
+После этого в окне для запросов \textit{pgadmin} был
+выполнен следующий запрос:
+\begin{verbatim}
+CREATE TABLE IF NOT EXISTS public.crypto
+(
+    slug character varying COLLATE pg_catalog."default",
+    symbol character varying COLLATE pg_catalog."default",
+    name character varying COLLATE pg_catalog."default",
+    date date,
+    ranknow integer,
+    open numeric,
+    high numeric,
+    low numeric,
+    close numeric,
+    volume numeric,
+    market numeric,
+    close_ratio numeric,
+    spread numeric
+)
+\end{verbatim}
+
+Этот запрос создал таблицу \verb|crypto| и все соответствующие столбцы
+в ней, необходимые для импорта значений из файла \verb|csv|.
+
+После была выбрана опция импорта данных в веб-интерфейсе.
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.1]{pgadmin-import-export.png}
+  \caption{Опция импорта данных}
+\end{figure}
+
+И был загружен файл \verb|csv|
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.2]{pgadmin-csv-import.png}
+  \caption{Окно импорта данных}
+  
+\end{figure}
+
+Была также выбрана опция \verb|Header| на вкладе \verb|Options|
+потому что в импортируемом файле первая строка начинается с
+подписей для столбцов.
+
+\section{Описание самого непонятного или сложного шага}
+
+Самым непонятным было то, что почему-то сервисы СУБД и веб интерфейса для
+управления СУБД были размещены не на локальном адресе 127.0.0.1,
+а в подсети для частного использования 172.20.0.1/24.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.1]{portainer-subnet.png}
+  \caption{Скриншот portainer демонстрирующий адрес запущенного контейнера }
+  
+\end{figure}
+
+Кроме этого каких-либо препятствий для выполнения работы не возникло.
+
+\section{Вывод}
+
+Были изучены методы разворачивания сервисов при помощи
+\textit{docker compose} и использован функционал персистентных хранилищ
+\textit{docker volume}.
+
+\end{document}

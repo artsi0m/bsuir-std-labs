@@ -5,7 +5,7 @@
 %%% End:
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{bsuir-std}[2024/09/20 Class conforming to BSUIR standard]
+\ProvidesClass{bsuir-std}[2024/10/30 Class conforming to BSUIR standard]
 
 
 \LoadClass[a4paper,14pt]{extarticle}
@@ -78,10 +78,12 @@
 % «абзацный отступ – 1,25 см»
 \setlength{\parindent}{12.5mm}
 
+
 \setlist[enumerate, 1]{
   label = \arabic* , % Поставить номер без точки
   nosep,   % У списков по СТП такой межстрочный интервал
-  labelindent = \parindent,
+  itemindent = 15mm,
+  labelindent = 10mm,
   leftmargin = *,
 }
 
